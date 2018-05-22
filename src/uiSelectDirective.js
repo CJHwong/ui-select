@@ -368,6 +368,14 @@ uis.directive('uiSelect',
 
         };
 
+        var setDropdownPosLeft = function(offset, offsetDropdown) {
+  
+          var droppdownPosLeft = offsetDropdown.width - offset.width;
+          dropdown[0].style.position = 'absolute';
+          dropdown[0].style.left = -droppdownPosLeft + 'px';
+
+        };
+
         var calculateDropdownPosAfterAnimation = function() {
           // Delay positioning the dropdown until all choices have been added so its height is correct.
           $timeout(function() {
@@ -391,6 +399,11 @@ uis.directive('uiSelect',
               }else{
                 //Go DOWN
                 setDropdownPosDown(offset, offsetDropdown);
+              }
+              var offsetLeft = offset.left + offsetDropdown.width;
+              var documentWidth = $document[0].documentElement.offsetWidth;
+              if (offsetLeft > documentWidth) {
+                setDropdownPosLeft(offset, offsetDropdown);
               }
             }
 
@@ -443,3 +456,4 @@ uis.directive('uiSelect',
     }
   };
 }]);
+
